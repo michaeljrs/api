@@ -33,6 +33,10 @@ app.get('/user', function(req, res) {
  
 });
 
+app.get('/teste', function(req, res) {
+		res.send("testesss");
+});
+
 
 app.post('/', function(req, res) {
   res.send({
