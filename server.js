@@ -40,6 +40,33 @@ app.get('/user/add/:id/:name', function(req, res) {
 	});
 });
 
+app.get('/element/:element/unique/:id', function(req, res) {
+  var query='select * from ' + req.params.element + ' where id="' + req.params.id + '" ';
+  res.locals.connection.query(query, function (error, results, fields) {
+	if(error) throw error;
+		res.send(JSON.stringify(results));
+	});
+});
+
+app.get('/element/:element/all', function(req, res) {
+  var query='select * from ' + req.params.element + ' ';
+
+  res.locals.connection.query(query, function (error, results, fields) {
+	if(error) throw error;
+		res.send(JSON.stringify(results));
+	});
+});
+
+app.get('/element/:element/filter/:filter', function(req, res) {
+  var query='select * from ' + req.params.element + ' where ' + req.params.filter + ' ';
+  res.locals.connection.query(query, function (error, results, fields) {
+	if(error) throw error;
+		res.send(JSON.stringify(results));
+	});
+});
+
+
+
 app.get('/query/:request', function(req, res) {
   //INSERT INTO members (id, name) VALUES(778,"michael") ON DUPLICATE KEY UPDATE name="michaelss44"
   var query= req.params.request;
