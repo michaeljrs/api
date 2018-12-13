@@ -44,8 +44,10 @@ app.get('/query/:request', function(req, res) {
   //INSERT INTO members (id, name) VALUES(778,"michael") ON DUPLICATE KEY UPDATE name="michaelss44"
   var query= req.params.request;
   res.locals.connection.query(query, function (error, results, fields) {
-	if(error) throw error;
-		
+	if(error) {
+			res.send(query + JSON.stringify(results));
+	//	throw error;
+	}
 	res.send(JSON.stringify(results));
 	
 	});
