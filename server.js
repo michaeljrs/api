@@ -11,17 +11,33 @@ app.use(function(req, res, next) {
 
 var mysql = require("mysql");
 //Database connection
+
+//
+
 app.use(function(req, res, next){
  
 	res.locals.connection = mysql.createConnection({
-		host     : 'mydb.csv5qvzrti0z.us-east-1.rds.amazonaws.com',
-		user     : 'root',
-		password : '#192341!dev',
-		database : 'general'
+		host     : 'dominosreadreplica-a.c4ktewqwmorj.us-east-1.rds.amazonaws.com',
+		user     : 'dominos',
+		password : 'TOo5DC(x*_+R6XQ',
+		database : 'Dominos'
 	});
 	res.locals.connection.connect();
 	next();
 });
+
+//app.use(function(req, res, next){
+// 
+//	res.locals.connection = mysql.createConnection({
+//		host     : 'mydb.csv5qvzrti0z.us-east-1.rds.amazonaws.com',
+//		user     : 'root',
+//		password : '#192341!dev',
+//		database : 'general'
+//	});
+//	res.locals.connection.connect();
+//	next();
+//});
+
 
 
 app.get('/', function(req, res) {
