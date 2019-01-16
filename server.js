@@ -20,7 +20,7 @@ app.use(function(req, res, next){
 		host     : 'dominosreadreplica-a.c4ktewqwmorj.us-east-1.rds.amazonaws.com',
 		user     : 'dominos',
 		password : 'TOo5DC(x*_+R6XQ',
-		database : 'Dominos'
+		database : 'Reports'
 	});
 	res.locals.connection.connect();
 	next();
