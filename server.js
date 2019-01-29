@@ -1,4 +1,4 @@
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 3000;
 var express = require('express');
 
 var app = express();
@@ -31,33 +31,6 @@ app.use(function(req, res, next){
 	res.locals.connection.connect();
 	next();
 });
-
-
-/* app.use(function(req, res, next){
- 
-	res.locals.connection = mysql.createConnection({
-		host     : 'dominosreadreplica-a.c4ktewqwmorj.us-east-1.rds.amazonaws.com',
-		user     : 'dominos',
-		password : 'TOo5DC(x*_+R6XQ',
-		database : 'Dominos'
-	});
-	res.locals.connection.connect();
-	next();
-}); */
-
-//app.use(function(req, res, next){
-// 
-//	res.locals.connection = mysql.createConnection({
-//		host     : 'mydb.csv5qvzrti0z.us-east-1.rds.amazonaws.com',
-//		user     : 'root',
-//		password : '#192341!dev',
-//		database : 'general'
-//	});
-//	res.locals.connection.connect();
-//	next();
-//});
-
-
 
 app.get('/', function(req, res) {
   res.send({
