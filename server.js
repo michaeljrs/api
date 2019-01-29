@@ -1,7 +1,13 @@
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 5000;
 var express = require('express');
 
 var app = express();
+
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -17,6 +23,19 @@ var mysql = require("mysql");
 app.use(function(req, res, next){
  
 	res.locals.connection = mysql.createConnection({
+		host     : 'sql10.freemysqlhosting.net',
+		user     : 'sql10276346',
+		password : 'HfajhPLb4y',
+		database : 'sql10276346'
+	});
+	res.locals.connection.connect();
+	next();
+});
+
+
+/* app.use(function(req, res, next){
+ 
+	res.locals.connection = mysql.createConnection({
 		host     : 'dominosreadreplica-a.c4ktewqwmorj.us-east-1.rds.amazonaws.com',
 		user     : 'dominos',
 		password : 'TOo5DC(x*_+R6XQ',
@@ -24,7 +43,7 @@ app.use(function(req, res, next){
 	});
 	res.locals.connection.connect();
 	next();
-});
+}); */
 
 //app.use(function(req, res, next){
 // 
@@ -42,7 +61,12 @@ app.use(function(req, res, next){
 
 app.get('/', function(req, res) {
   res.send({
-    "Output": "Hello World!"
+    "Output": "get Hello World!"
+  });
+});
+app.post('/', function(req, res) {
+  res.send({
+    "Output": "post Hello World!"
   });
 });
 
@@ -62,8 +86,34 @@ app.get('/user/add/:id/:name', function(req, res) {
 });
 
 app.get('/element/:element/unique/:id', function(req, res) {
+
+	console.log(res)
   var query='select * from ' + req.params.element + ' where id="' + req.params.id + '" ';
   res.locals.connection.query(query, function (error, results, fields) {
+		
+	if(error) throw error;
+		res.send(JSON.stringify(results));
+	});
+});
+
+app.post('/element/:element/unique/:id', function(req, res) {
+
+	console.log(req.body.teste)
+  var query='select * from ' + req.params.element + ' where id="' + req.params.id + '" ';
+  res.locals.connection.query(query, function (error, results, fields) {
+		
+	if(error) throw error;
+		res.send(JSON.stringify(results));
+	});
+});
+
+
+app.put('/element/:element/unique/:id', function(req, res) {
+
+	console.log(req.body.teste)
+  var query='select * from ' + req.params.element + ' where id="' + req.params.id + '" ';
+  res.locals.connection.query(query, function (error, results, fields) {
+		
 	if(error) throw error;
 		res.send(JSON.stringify(results));
 	});
@@ -101,6 +151,20 @@ app.get('/query/:request', function(req, res) {
 	});
 });
 
+app.post('/query/', function(req, res) {
+  //INSERT INTO members (id, name) VALUES(778,"michael") ON DUPLICATE KEY UPDATE name="michaelss44"
+  var query= req.body.query
+  res.locals.connection.query(query, function (error, results, fields) {
+	if(error) {
+		 
+			res.send("error:" +query + JSON.stringify(results));
+	//	throw error;
+	}
+	res.send(JSON.stringify(results));
+	
+	});
+});
+
 app.get('/users', function(req, res) {
  res.locals.connection.query('SELECT * from members ', function (error, results, fields) {
 		if(error) throw error;
@@ -110,16 +174,9 @@ app.get('/users', function(req, res) {
 });
 
 
-app.get('/teste', function(req, res) {
-		res.send("testesss");
-});
 
 
-app.post('/', function(req, res) {
-  res.send({
-    "Output": "Hello World!"
-  });
-});
+
 
 app.listen(port);
 module.exports = app;
