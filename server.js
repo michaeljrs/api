@@ -18,8 +18,6 @@ app.use(function(req, res, next) {
 var mysql = require("mysql");
 //Database connection
 
-//
-
 app.use(function(req, res, next){
  
 	res.locals.connection = mysql.createConnection({
